@@ -10,6 +10,7 @@ namespace Management.Shared.Entities
     public class Employee
     {
         public int Id { get; set; }
+
         [Display(Name = "Nombre")]
         [MaxLength(100, ErrorMessage = "El nombre no puede superar los 100 caracteres")]
         [Required(ErrorMessage = "El nombre es obligatorio.")]
@@ -19,7 +20,7 @@ namespace Management.Shared.Entities
         [MaxLength(100, ErrorMessage = "El Apellido no puede superar los 100 caracteres")]
         [Required(ErrorMessage = "El Apellido es obligatorio.")]
         public string LastName { get; set; }
-        public DateTime HireDate { get; set; }
+        public DateTime HireDate { get; set; } 
         public bool IsActive { get; set; }
 
         [Display(Name = "Salario")]
