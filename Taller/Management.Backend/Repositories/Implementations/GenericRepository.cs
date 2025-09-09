@@ -1,5 +1,6 @@
 ﻿using Management.Backend.Data;
 using Management.Backend.Repositories.Interfaces;
+using Management.Shared.Entities;
 using Management.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 
@@ -72,6 +73,41 @@ namespace Management.Backend.Repositories.Implementations
             }
 
         }
+
+        public virtual async Task<ActionResponse<IEnumerable<T>>> SearchAsync(string text)
+        {
+            if (string.IsNullOrWhiteSpace(text))
+            {
+                return new ActionResponse<IEnumerable<T>>
+                {
+                    WasSuccess = false,
+                    Message = "Debe ingresar un criterio de búsqueda"
+                };
+            }
+
+            if (typeof(T) == typeof(Employee))
+            {
+                var query = await _entity
+                    .Cast<Employee>()
+                    .Where(e => e.FirstName.Contains(text) || e.LastName.Contains(text))
+                    .ToListAsync();
+
+                return new ActionResponse<IEnumerable<T>>
+                {
+                    WasSuccess = true,
+                    Result = query.Cast<T>()
+                };
+            }
+
+            return new ActionResponse<IEnumerable<T>>
+            {
+                WasSuccess = false,
+                Message = "La búsqueda por texto no está implementada para esta entidad"
+            };
+        }
+
+
+
 
         public virtual async Task<ActionResponse<T>> GetAsync(int id)
         {

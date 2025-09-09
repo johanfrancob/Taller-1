@@ -16,6 +16,8 @@ namespace Management.Backend.UnitsOfWork.Implementations
         public virtual async Task<ActionResponse<T>> AddAsync(T entity) => await _repository.AddAsync(entity);
 
         public virtual async Task<ActionResponse<T>> DeleteAsync(int id) => await _repository.DeleteAsync(id);
+        public async Task<ActionResponse<IEnumerable<T>>> SearchAsync(string text)=> await _repository.SearchAsync(text);
+
 
 
         public virtual async Task<ActionResponse<T>> GetAsync(int id) => await _repository.GetAsync(id);

@@ -23,6 +23,18 @@ namespace Management.Backend.Controllers
             return Ok(action.Result);
         }
 
+        [HttpGet("search/{text}")]
+        public virtual async Task<IActionResult> SearchAsync(string text)
+        {
+            var action = await _unitOfWork.SearchAsync(text);
+            if (!action.WasSuccess)
+            {
+                return BadRequest(action.Message);
+            }
+            return Ok(action.Result);
+        }
+
+
         [HttpGet("{id}")]
         public virtual async Task<IActionResult> GetAsync(int id)
         {
@@ -33,6 +45,8 @@ namespace Management.Backend.Controllers
             }
             return Ok(action.Result);
         }
+
+
 
         [HttpPost]
         public virtual async Task<IActionResult> PostAsync(T model)

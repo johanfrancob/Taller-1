@@ -9,6 +9,6 @@ namespace Management.Backend.Repositories.Interfaces
         Task<ActionResponse<T>> AddAsync(T entity);
         Task<ActionResponse<T>> UpdateAsync(T entity);
         Task<ActionResponse<T>> DeleteAsync(int id);
-
+        Task<ActionResponse<IEnumerable<T>>> SearchAsync(string text);
     }
 }
