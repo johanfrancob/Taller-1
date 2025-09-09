@@ -25,7 +25,7 @@ namespace Management.Shared.Entities
 
         [Display(Name = "Salario")]
         [Required(ErrorMessage = "El salario es obligatorio.")]
-        [Range(0, double.MaxValue, ErrorMessage = "El salario debe minimo es de $1'000.000")]
+        [Range(1000000, double.MaxValue, ErrorMessage = "El salario debe minimo es de $1'000.000")]
         public decimal Salary { get; set; }
 
     }
