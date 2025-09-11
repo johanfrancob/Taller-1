@@ -12,20 +12,24 @@ namespace Management.Shared.Entities
         public int Id { get; set; }
 
         [Display(Name = "Nombre")]
-        [MaxLength(100, ErrorMessage = "El nombre no puede superar los 100 caracteres")]
+        [MaxLength(30, ErrorMessage = "El nombre no puede superar los 30 caracteres")]
         [Required(ErrorMessage = "El nombre es obligatorio.")]
         public string FirstName { get; set; }
 
         [Display(Name = "Apellido")]
-        [MaxLength(100, ErrorMessage = "El Apellido no puede superar los 100 caracteres")]
+        [MaxLength(30, ErrorMessage = "El Apellido no puede superar los 30 caracteres")]
         [Required(ErrorMessage = "El Apellido es obligatorio.")]
         public string LastName { get; set; }
-        public DateTime HireDate { get; set; } 
+
+        [Display(Name = "Fecha de contratación")]
+        public DateTime HireDate { get; set; }
+
+        [Display(Name = "Activo")]
         public bool IsActive { get; set; }
 
         [Display(Name = "Salario")]
         [Required(ErrorMessage = "El salario es obligatorio.")]
-        [Range(1000000, double.MaxValue, ErrorMessage = "El salario debe minimo es de $1'000.000")]
+        [Range(1000000, double.MaxValue, ErrorMessage = "El salario debe ser minimo de $1'000.000")]
         public decimal Salary { get; set; }
 
     }
