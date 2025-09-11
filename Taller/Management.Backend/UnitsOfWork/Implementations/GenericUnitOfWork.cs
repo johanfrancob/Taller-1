@@ -10,7 +10,7 @@ namespace Management.Backend.UnitsOfWork.Implementations
 
         public GenericUnitOfWork(IGenericRepository<T> repository)
         {
-            this._repository = repository;
+            _repository = repository;
         }
 
         public virtual async Task<ActionResponse<T>> AddAsync(T entity) => await _repository.AddAsync(entity);

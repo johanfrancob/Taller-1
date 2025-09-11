@@ -13,8 +13,8 @@ namespace Management.Backend.Repositories.Implementations
 
         public GenericRepository(DataContext context)
         {
-            this._context = context; //las privadas deben empezar con _
-            this._entity = context.Set<T>(); //Set es un método que devuelve la tabla de la base de datos que corresponde a la entidad T
+            _context = context; //las privadas deben empezar con _
+            _entity = context.Set<T>(); //Set es un método que devuelve la tabla de la base de datos que corresponde a la entidad T
         }
 
         public virtual async Task<ActionResponse<T>> AddAsync(T entity) //deben ser async para
@@ -68,7 +68,7 @@ namespace Management.Backend.Repositories.Implementations
                 return new ActionResponse<T>
                 {
                     WasSuccess = false,
-                    Message = "No se puede borrar, porque tiene registros relacionados"
+                    Message = "No se puede borrar porque tiene registros relacionados"
                 };
             }
 
@@ -92,6 +92,15 @@ namespace Management.Backend.Repositories.Implementations
                     .Where(e => e.FirstName.Contains(text) || e.LastName.Contains(text))
                     .ToListAsync();
 
+                if (query.Count() == 0)
+                {
+                    return new ActionResponse<IEnumerable<T>>
+                    {
+                        WasSuccess = false,
+                        Message = "No se ha encontrado un resultado"
+                    };
+                }
+
                 return new ActionResponse<IEnumerable<T>>
                 {
                     WasSuccess = true,
@@ -102,7 +111,7 @@ namespace Management.Backend.Repositories.Implementations
             return new ActionResponse<IEnumerable<T>>
             {
                 WasSuccess = false,
-                Message = "La búsqueda por texto no está implementada para esta entidad"
+                Message = "Ha ocurrido un error"
             };
         }
 

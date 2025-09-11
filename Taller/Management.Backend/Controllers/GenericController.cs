@@ -9,7 +9,7 @@ namespace Management.Backend.Controllers
 
         public GenericController(IGenericUnitOfWork<T> unitOfWork)
         {
-            this._unitOfWork = unitOfWork;
+            _unitOfWork = unitOfWork;
         }
 
         [HttpGet]
