@@ -1,4 +1,5 @@
-﻿using Management.Shared.Responses;
+﻿using Management.Shared.DTOs;
+using Management.Shared.Responses;
 
 namespace Management.Backend.UnitsOfWork.Interfaces
 {
@@ -9,7 +10,9 @@ namespace Management.Backend.UnitsOfWork.Interfaces
         Task<ActionResponse<T>> AddAsync(T entity);
         Task<ActionResponse<T>> UpdateAsync(T model);
         Task<ActionResponse<T>> DeleteAsync(int id);
-        Task<ActionResponse<IEnumerable<T>>> SearchAsync(string text);
+        Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination);
+		Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination);
 
-    }
+
+	}
 }

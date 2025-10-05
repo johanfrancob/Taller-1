@@ -1,4 +1,5 @@
 ﻿using Management.Backend.UnitsOfWork.Interfaces;
+using Management.Shared.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Management.Backend.Controllers
@@ -16,17 +17,6 @@ namespace Management.Backend.Controllers
         public virtual async Task<IActionResult> GetAsync()
         {
             var action = await _unitOfWork.GetAsync();
-            if (!action.WasSuccess)
-            {
-                return BadRequest(action.Message);
-            }
-            return Ok(action.Result);
-        }
-
-        [HttpGet("search/{text}")]
-        public virtual async Task<IActionResult> SearchAsync(string text)
-        {
-            var action = await _unitOfWork.SearchAsync(text);
             if (!action.WasSuccess)
             {
                 return BadRequest(action.Message);
@@ -81,5 +71,29 @@ namespace Management.Backend.Controllers
             return Ok(action.Result);
         }
 
-    }
+		[HttpGet("paginated")]
+		public virtual async Task<IActionResult> GetAsync([FromQuery] PaginationDTO pagination)
+		{
+			var action = await _unitOfWork.GetAsync(pagination);
+			if (action.WasSuccess)
+			{
+				return Ok(action.Result);
+			}
+			return BadRequest();
+		}
+
+		[HttpGet("totalRecords")]
+		public virtual async Task<IActionResult> GetTotalRecordsAsync([FromQuery] PaginationDTO pagination)
+		{
+			var action = await _unitOfWork.GetTotalRecordsAsync(pagination);
+			if (action.WasSuccess)
+			{
+				return Ok(action.Result);
+			}
+			return BadRequest();
+		}
+
+
+
+	}
 }

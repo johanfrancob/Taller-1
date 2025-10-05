@@ -1,5 +1,7 @@
 ﻿using Management.Backend.Data;
+using Management.Backend.Helpers;
 using Management.Backend.Repositories.Interfaces;
+using Management.Shared.DTOs;
 using Management.Shared.Entities;
 using Management.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
@@ -74,48 +76,29 @@ namespace Management.Backend.Repositories.Implementations
 
         }
 
-        public virtual async Task<ActionResponse<IEnumerable<T>>> SearchAsync(string text)
+        public virtual async Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination)
         {
-            if (string.IsNullOrWhiteSpace(text))
-            {
-                return new ActionResponse<IEnumerable<T>>
-                {
-                    WasSuccess = false,
-                    Message = "Debe ingresar un criterio de búsqueda"
-                };
-            }
-
-            if (typeof(T) == typeof(Employee))
-            {
-                var query = await _entity
-                    .Cast<Employee>()
-                    .Where(e => e.FirstName.Contains(text) || e.LastName.Contains(text))
-                    .ToListAsync();
-
-                if (query.Count() == 0)
-                {
-                    return new ActionResponse<IEnumerable<T>>
-                    {
-                        WasSuccess = false,
-                        Message = "No se ha encontrado un resultado"
-                    };
-                }
-
-                return new ActionResponse<IEnumerable<T>>
-                {
-                    WasSuccess = true,
-                    Result = query.Cast<T>()
-                };
-            }
+            var queryable = _entity.AsQueryable();
 
             return new ActionResponse<IEnumerable<T>>
             {
-                WasSuccess = false,
-                Message = "Ha ocurrido un error"
+                WasSuccess = true,
+                Result = await queryable
+                    .Paginate(pagination)
+                    .ToListAsync()
             };
         }
 
-
+        public virtual async Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination)
+        {
+            var queryable = _entity.AsQueryable();
+            double count = await queryable.CountAsync();
+            return new ActionResponse<int>
+            {
+                WasSuccess = true,
+                Result = (int)count
+            };
+        }
 
 
         public virtual async Task<ActionResponse<T>> GetAsync(int id)

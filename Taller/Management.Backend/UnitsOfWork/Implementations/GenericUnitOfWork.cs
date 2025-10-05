@@ -1,5 +1,6 @@
 ﻿using Management.Backend.Repositories.Interfaces;
 using Management.Backend.UnitsOfWork.Interfaces;
+using Management.Shared.DTOs;
 using Management.Shared.Responses;
 
 namespace Management.Backend.UnitsOfWork.Implementations
@@ -16,16 +17,17 @@ namespace Management.Backend.UnitsOfWork.Implementations
         public virtual async Task<ActionResponse<T>> AddAsync(T entity) => await _repository.AddAsync(entity);
 
         public virtual async Task<ActionResponse<T>> DeleteAsync(int id) => await _repository.DeleteAsync(id);
-        public async Task<ActionResponse<IEnumerable<T>>> SearchAsync(string text)=> await _repository.SearchAsync(text);
-
 
 
         public virtual async Task<ActionResponse<T>> GetAsync(int id) => await _repository.GetAsync(id);
 
-        public async Task<ActionResponse<IEnumerable<T>>> GetAsync() => await _repository.GetAsync();
+        public virtual async Task<ActionResponse<IEnumerable<T>>> GetAsync() => await _repository.GetAsync();
 
+		public virtual async Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination) => await _repository.GetAsync(pagination);
 
-        public async Task<ActionResponse<T>> UpdateAsync(T entity) => await _repository.UpdateAsync(entity);
+		public virtual async Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination) => await _repository.GetTotalRecordsAsync(pagination);
+
+		public virtual async Task<ActionResponse<T>> UpdateAsync(T entity) => await _repository.UpdateAsync(entity);
 
     }
 }

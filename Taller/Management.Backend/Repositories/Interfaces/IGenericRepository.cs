@@ -1,4 +1,6 @@
-﻿using Management.Shared.Responses;
+﻿using Management.Shared.DTOs;
+using Management.Shared.Entities;
+using Management.Shared.Responses;
 
 namespace Management.Backend.Repositories.Interfaces
 {
@@ -9,6 +11,7 @@ namespace Management.Backend.Repositories.Interfaces
         Task<ActionResponse<T>> AddAsync(T entity);
         Task<ActionResponse<T>> UpdateAsync(T entity);
         Task<ActionResponse<T>> DeleteAsync(int id);
-        Task<ActionResponse<IEnumerable<T>>> SearchAsync(string text);
+        Task<ActionResponse<IEnumerable<T>>> GetAsync(PaginationDTO pagination);
+        Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination);
     }
 }
