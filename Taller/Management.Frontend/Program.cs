@@ -1,5 +1,6 @@
-using MudBlazor.Services;
 using Management.Frontend.Components;
+using Management.Frontend.Repositories;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,11 @@ builder.Services.AddMudServices();
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri("https://localhost:7086") }); //debe apuntar a la URL del backend
+
+//Inyeccion del repositorio
+builder.Services.AddScoped<IRepository, Repository>();
+
 
 var app = builder.Build();
 

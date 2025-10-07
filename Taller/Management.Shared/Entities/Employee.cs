@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Management.Shared.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Management.Shared.Entities
 {
-    public class Employee
+    public class Employee : IEntityWithName
     {
         public int Id { get; set; }
 
