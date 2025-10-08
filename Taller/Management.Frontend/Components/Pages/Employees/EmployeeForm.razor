@@ -1,25 +1,47 @@
 ﻿<EditForm EditContext="editContext" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
-    <MudTextField Label="Empleado"
-                  @bind-Value="@employee.FirstName"
-                  For="@(() => employee.FirstName)"
-                  Class="mb-4" />
+
+    <MudTextField Label="Nombre"
+                  @bind-Value="employee.FirstName"
+                  For="@(() => employee.FirstName)" Class="mb-4" />
+
+    <MudTextField Label="Apellido"
+                  @bind-Value="employee.LastName"
+                  For="@(() => employee.LastName)" Class="mb-4" />
+
+    <MudTextField Label="Salario"
+                  @bind-Value="employee.Salary"
+                  For="@(() => employee.Salary)"
+                  Class="mb-4"
+                  Adornment="Adornment.Start"
+                  AdornmentText="$"
+                  Immediate="true"
+                  Numeric="true" />
+
+    <MudDatePicker T="DateTime"
+                   Date="@((DateTime?)employee.HireDate)"
+                   DateChanged="@(d => employee.HireDate = d ?? employee.HireDate)"
+                   Label="Fecha de contratación"
+                   DateFormat="dd/MM/yyyy"
+                   Class="mb-4" />
+
+    <MudSelect T="bool" @bind-Value="employee.IsActive" Label="Estado">
+        <MudSelectItem Value="true">Activo</MudSelectItem>
+        <MudSelectItem Value="false">Inactivo</MudSelectItem>
+    </MudSelect>
+
 
     <MudButton Variant="Variant.Outlined"
                StartIcon="@Icons.Material.Filled.ArrowBack"
                Color="Color.Info"
                OnClick="ReturnAction">
-        <MudHidden xs="true">
-            Cancelar
-        </MudHidden>
+        Cancelar
     </MudButton>
 
     <MudButton Variant="Variant.Outlined"
                StartIcon="@Icons.Material.Filled.Check"
                Color="Color.Primary"
                ButtonType="ButtonType.Submit">
-        <MudHidden xs="true">
-            Guardar Cambios
-        </MudHidden>
+        Guardar Cambios
     </MudButton>
 </EditForm>

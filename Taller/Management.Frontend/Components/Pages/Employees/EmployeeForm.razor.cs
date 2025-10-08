@@ -15,7 +15,11 @@ namespace Management.Frontend.Components.Pages.Employees
 
         protected override void OnInitialized()
         {
-            editContext = new(employee);
+            if (editContext is null || !ReferenceEquals(editContext.Model, employee))
+            {
+                editContext = new EditContext(employee);
+            }
+
         }
 
     }

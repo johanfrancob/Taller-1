@@ -56,11 +56,19 @@ namespace Management.Backend.Repositories.Implementations
         {
             var queryable = _context.Employees.AsQueryable();
 
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
+            {
+                var f = pagination.Filter.ToLower();
+                queryable = queryable.Where(x =>
+                    x.FirstName.ToLower().Contains(f) ||
+                    x.LastName.ToLower().Contains(f));
+            }
+
             return new ActionResponse<IEnumerable<Employee>>
             {
                 WasSuccess = true,
                 Result = await queryable
-                    .OrderBy(x => x.FirstName)
+                    .OrderBy(x => x.Id)
                     .Paginate(pagination)
                     .ToListAsync()
             };
@@ -68,13 +76,19 @@ namespace Management.Backend.Repositories.Implementations
 
         public override async Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination)
         {
-            var total = await _context.Employees.CountAsync();
+            var queryable = _context.Employees.AsQueryable();
 
-            return new ActionResponse<int>
+            if (!string.IsNullOrWhiteSpace(pagination.Filter))
             {
-                WasSuccess = true,
-                Result = total
-            };
+                var f = pagination.Filter.ToLower();
+                queryable = queryable.Where(x =>
+                    x.FirstName.ToLower().Contains(f) ||
+                    x.LastName.ToLower().Contains(f));
+            }
+
+            var total = await queryable.CountAsync();
+            return new ActionResponse<int> { WasSuccess = true, Result = total };
+
         }
 
         public override async Task<ActionResponse<IEnumerable<Employee>>> GetAsync()

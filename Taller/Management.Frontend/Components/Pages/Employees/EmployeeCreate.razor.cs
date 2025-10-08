@@ -9,6 +9,7 @@ namespace Management.Frontend.Components.Pages.Employees
     public partial class EmployeeCreate
     {
         private Employee employee = new();
+        [CascadingParameter] private IMudDialogInstance Dialog { get; set; } = default!;
 
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
@@ -24,13 +25,13 @@ namespace Management.Frontend.Components.Pages.Employees
                 return;
             }
 
-            Return();
             Snackbar.Add("Registro creado", Severity.Success);
+            Dialog.Close(DialogResult.Ok(true));
         }
 
         private void Return()
         {
-            NavigationManager.NavigateTo("/employee");
+            Dialog.Cancel();
         }
 
     }

@@ -10,6 +10,9 @@ namespace Management.Frontend.Components.Pages.Employees
     {
         private Employee? employee;
 
+        [CascadingParameter] private IMudDialogInstance Dialog { get; set; } = default!;
+
+
         [Inject] private NavigationManager NavigationManager { get; set; } = null!;
         [Inject] private IRepository Repository { get; set; } = null!;
         [Inject] private ISnackbar Snackbar { get; set; } = null!;
@@ -24,7 +27,7 @@ namespace Management.Frontend.Components.Pages.Employees
             {
                 if (responseHttp.HttpResponseMessage.StatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    NavigationManager.NavigateTo("employees");
+                    NavigationManager.NavigateTo("employee");
                 }
                 else
                 {
@@ -35,6 +38,8 @@ namespace Management.Frontend.Components.Pages.Employees
             else
             {
                 employee = responseHttp.Response;
+                StateHasChanged(); 
+
             }
         }
 
@@ -49,14 +54,15 @@ namespace Management.Frontend.Components.Pages.Employees
                 return;
             }
 
-            Return();
             Snackbar.Add("Registro guardado.", Severity.Success);
+            Dialog.Close(DialogResult.Ok(true));
+
+
         }
 
         private void Return()
         {
-            NavigationManager.NavigateTo("countries");
+            Dialog.Cancel();                      
         }
-
     }
 }

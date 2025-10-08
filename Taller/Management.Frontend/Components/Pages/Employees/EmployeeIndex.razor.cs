@@ -11,7 +11,7 @@ namespace Management.Frontend.Components.Pages.Employees
 {
     public partial class EmployeeIndex
     {
-        private List<Employee>? Employees { get; set; } = new();
+        private List<Employee>? employees { get; set; } = new();
         private MudTable<Employee>? table = new();
         private readonly int[] pageSizeOptions = { 10, 25, 50, int.MaxValue };
         private int totalRecords = 0;
@@ -101,31 +101,34 @@ namespace Management.Frontend.Components.Pages.Employees
                 var parameters = new DialogParameters
             {
                 { "Id", id }
-            }; dialog = await DialogService.ShowAsync<EmployeeEdit>("Editar país", parameters, options);
+            }; dialog = await DialogService.ShowAsync<EmployeeEdit>("Editar empleado", parameters, options);
             }
             else
             {
-                dialog = await DialogService.ShowAsync<EmployeeCreate>("Nuevo país", options);
+                dialog = await DialogService.ShowAsync<EmployeeCreate>("Nuevo empleado", options);
             }
 
             var result = await dialog.Result;
-            if (result!.Canceled!)
+            if (!result.Canceled) // ?? recargar solo si guardó OK
             {
                 await LoadTotalRecordsAsync();
-                await table.ReloadServerData();
+                await table!.ReloadServerData();
             }
+
         }
 
         private async Task DeleteAsync(Employee employee)
         {
             var parameters = new DialogParameters
         {
-            { "Message", $"Estas seguro de borrar el país: {employee.FirstName} {employee.LastName}" }
+            { "Message", $"Estas seguro de borrar al empleado: {employee.FirstName} {employee.LastName}?" }
         };
             var options = new DialogOptions { CloseButton = true, MaxWidth = MaxWidth.ExtraSmall, CloseOnEscapeKey = true };
             var dialog = await DialogService.ShowAsync<ConfirmDialog>("Confirmación", parameters, options);
+            
             var result = await dialog.Result;
-            if (result!.Canceled)
+
+            if (result.Canceled)
             {
                 return;
             }
