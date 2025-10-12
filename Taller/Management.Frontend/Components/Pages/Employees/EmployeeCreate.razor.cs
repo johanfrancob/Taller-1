@@ -8,7 +8,11 @@ namespace Management.Frontend.Components.Pages.Employees
 {
     public partial class EmployeeCreate
     {
-        private Employee employee = new();
+        private Employee employee = new()
+        {
+            HireDate = DateTime.Now
+        };
+
         [CascadingParameter] private IMudDialogInstance Dialog { get; set; } = default!;
 
         [Inject] private IRepository Repository { get; set; } = null!;
