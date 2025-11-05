@@ -16,6 +16,7 @@ namespace Management.Backend.Data
         {
             await _context.Database.EnsureCreatedAsync();
             await CheckEmployeesAsync();
+
             
         }
 
@@ -207,7 +208,6 @@ namespace Management.Backend.Data
 
                 await _context.SaveChangesAsync();
             }
-
 
 
 
