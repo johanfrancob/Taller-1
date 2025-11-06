@@ -1,5 +1,7 @@
+using Management.Frontend.AuthenticationProviders;
 using Management.Frontend.Components;
 using Management.Frontend.Repositories;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,8 @@ builder.Services.AddMudServices();
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddScoped(_ => new HttpClient { BaseAddress = new Uri("https://localhost:7086") }); //debe apuntar a la URL del backend
+builder.Services.AddAuthorizationCore();
+builder.Services.AddScoped<AuthenticationStateProvider, AuthenticationProviderTest>();
 
 //Inyeccion del repositorio
 builder.Services.AddScoped<IRepository, Repository>();
@@ -27,12 +31,8 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
-
 app.UseAntiforgery();
-
 app.MapStaticAssets();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
-
 app.Run();
