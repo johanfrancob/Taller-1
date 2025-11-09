@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using Management.Frontend.Components.Shared;
 using Management.Frontend.Repositories;
 using Management.Shared.Entities;
 using System.Net;

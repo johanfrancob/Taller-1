@@ -46,24 +46,25 @@ public class StatesRepository : GenericRepository<State>, IStatesRepository
         };
     }
 
-    public override async Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination)
+    public async Task<int> GetTotalRecordsAsync(PaginationDTO pagination)
     {
-        var queryable = _context.States
-            .Where(x => x.Country!.Id == pagination.Id)
-            .AsQueryable();
+        var queryable = _context.States.AsQueryable();
+
+  
+        if (pagination.Id > 0) 
+        {
+            queryable = queryable.Where(x => x.CountryId == pagination.Id);
+        }
 
         if (!string.IsNullOrWhiteSpace(pagination.Filter))
         {
-            queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter.ToLower()));
+            queryable = queryable.Where(x =>
+                x.Name.ToLower().Contains(pagination.Filter.ToLower()));
         }
 
-        double count = await queryable.CountAsync();
-        return new ActionResponse<int>
-        {
-            WasSuccess = true,
-            Result = (int)count
-        };
+        return await queryable.CountAsync();
     }
+
 
     public override async Task<ActionResponse<IEnumerable<State>>> GetAsync()
     {

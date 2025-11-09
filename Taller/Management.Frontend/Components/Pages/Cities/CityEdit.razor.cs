@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using Management.Frontend.Repositories;
 using Management.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
-namespace Orders.Frontend.Components.Pages.Cities;
+namespace Management.Frontend.Components.Pages.Cities;
 
 public partial class CityEdit
 {

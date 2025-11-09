@@ -1,7 +1,8 @@
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
 using Management.Frontend.Repositories;
 using Management.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace Management.Frontend.Components.Pages.Cities;
 

@@ -1,11 +1,11 @@
+using Management.Shared.Interfaces;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
-using Management.Shared.Interfaces;
 
-namespace Management.Frontend.Components.Shared;
+namespace Management.Frontend.Components.Pages.Shared;
 
-public partial class FormWithName<TModel> where TModel : IEntityWithName
+public partial class FormWithName<TModel> where TModel : IEntityName
 {
     private EditContext editContext = null!;
 

@@ -6,10 +6,6 @@ namespace Management.Backend.UnitsOfWork.Interfaces;
 
 public interface IUsersUnitOfWork
 {
-    Task<SignInResult> LoginAsync(LoginDTO model);
-
-    Task LogoutAsync();
-
     Task<User> GetUserAsync(string email);
 
     Task<IdentityResult> AddUserAsync(User user, string password);
@@ -17,6 +13,10 @@ public interface IUsersUnitOfWork
     Task CheckRoleAsync(string roleName);
 
     Task AddUserToRoleAsync(User user, string roleName);
+
+    Task<SignInResult> LoginAsync(LoginDTO model);
+
+    Task LogoutAsync();
 
     Task<bool> IsUserInRoleAsync(User user, string roleName);
 }

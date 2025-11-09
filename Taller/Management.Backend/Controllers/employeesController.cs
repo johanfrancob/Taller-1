@@ -1,6 +1,8 @@
 ﻿using Management.Backend.UnitsOfWork.Interfaces;
 using Management.Shared.DTOs;
 using Management.Shared.Entities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,7 +10,8 @@ using Microsoft.EntityFrameworkCore;
 namespace Management.Backend.Controllers
 {
 	[ApiController]
-	[Route("api/[Controller]")]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("api/[Controller]")]
 	public class EmployeesController : GenericController<Employee>
 	{
 		private readonly IEmployeesUnitOfWork _employeesUnitOfWork;

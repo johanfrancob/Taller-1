@@ -1,6 +1,7 @@
 using Management.Frontend.Components.Pages.Shared;
 using Management.Frontend.Repositories;
 using Management.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 using System.Diagnostics.Metrics;
@@ -9,6 +10,8 @@ using System.Net;
 
 namespace Management.Frontend.Components.Pages.Employees
 {
+    [Authorize(Roles = "Admin")]
+
     public partial class EmployeeIndex
     {
         private List<Employee>? employees { get; set; } = new();

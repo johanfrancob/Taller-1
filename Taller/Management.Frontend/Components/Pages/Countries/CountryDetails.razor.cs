@@ -1,10 +1,11 @@
-using Microsoft.AspNetCore.Components;
-using MudBlazor;
+using Management.Frontend.Components.Pages.Shared;
 using Management.Frontend.Components.Pages.States;
 using Management.Frontend.Repositories;
 using Management.Shared.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
 using System.Net;
-using Management.Frontend.Components.Pages.Shared;
 
 namespace Management.Frontend.Components.Pages.Countries;
 
@@ -14,7 +15,7 @@ public partial class CountryDetails
     private List<State>? states;
 
     private MudTable<State> table = new();
-    private readonly int[] pageSizeOptions = { 10, 25, 50, int.MaxValue };
+    private readonly int[] pageSizeOptions = { 10, 25, 50, 5, int.MaxValue };
     private int totalRecords = 0;
     private bool loading;
     private const string baseUrl = "api/states";

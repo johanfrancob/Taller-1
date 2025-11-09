@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Management.Shared.Interfaces
 {
-    internal interface IEntityName
+    public interface IEntityName
     {
         string Name { get; set; }
 

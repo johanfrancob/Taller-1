@@ -48,20 +48,28 @@ public class CitiesRepository : GenericRepository<City>, ICitiesRepository
 
     public override async Task<ActionResponse<int>> GetTotalRecordsAsync(PaginationDTO pagination)
     {
-        var queryable = _context.Cities
-            .Where(x => x.State!.Id == pagination.Id)
-            .AsQueryable();
+        var queryable = _context.Cities.AsQueryable();
 
-        if (!string.IsNullOrWhiteSpace(pagination.Filter))
+        if (pagination.Id > 0)
         {
-            queryable = queryable.Where(x => x.Name.ToLower().Contains(pagination.Filter.ToLower()));
+            queryable = queryable.Where(x => x.StateId == pagination.Id);
+            
         }
 
-        double count = await queryable.CountAsync();
+      
+        if (!string.IsNullOrWhiteSpace(pagination.Filter))
+        {
+            var filter = pagination.Filter.ToLower();
+            queryable = queryable.Where(x => x.Name.ToLower().Contains(filter));
+        }
+
+        var count = await queryable.CountAsync();
+
         return new ActionResponse<int>
         {
             WasSuccess = true,
-            Result = (int)count
+            Result = count 
         };
     }
+
 }

@@ -18,6 +18,6 @@ public class AuthenticationProviderTest : AuthenticationStateProvider
         ],
         authenticationType: "test");
 
-        return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(admin)));
+        return await Task.FromResult(new AuthenticationState(new ClaimsPrincipal(user)));
     }
 }
